@@ -22,6 +22,7 @@ const App = () => {
                     </img>
                 </Typography>
             </AppBar>
+            &nbsp;
             <Grow in>
                 <Container>
                     <Grid container justify='space-between' alignItems='stretch' spacing={3}>
