@@ -10,6 +10,8 @@ import useStyles from './styles';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
+import { signup, signin } from '../../actions/auth';
+
 const Auth = () => {
     const classes = useStyles();
     const [showPassword, setshowPassword] = useState(false);
@@ -22,11 +24,13 @@ const Auth = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (isSignUp && formData.password !== formData.confirmPassword) {
-            alert('Passwords do not match!');
-            return;
+        if (isSignUp) {
+            dispatch(signup(formData, navigate))
         }
-        console.log(formData);
+        else {
+            dispatch(signin(formData, navigate))
+        }
+        //console.log(formData);
     };
 
     const handleChange = (e) => {
@@ -57,9 +61,11 @@ const Auth = () => {
                         <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} />
                         {isSignUp && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" />}
                     </Grid>
+                    <br/>
                     <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
                         {isSignUp ? 'Sign Up' : 'Sign In'}
                     </Button>
+                    &nbsp;
                     <GoogleOAuthProvider clientId="751459069091-05u7nl1p2b495j8r53oov6sc9r2q08i3.apps.googleusercontent.com">
                         <GoogleLogin
                             onSuccess={(credentialResponse) => {

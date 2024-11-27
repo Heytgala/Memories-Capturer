@@ -5,14 +5,18 @@ import Form from '../../components/Form/Form'
 import { useDispatch } from 'react-redux';
 import { getPosts } from '../../actions/posts'
 
-
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
     const [currentId, setCurrentId] = useState(0);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+
     useEffect(() => {
+        navigate('/');
         dispatch(getPosts());
-    }, [currentId, dispatch]);
+        
+    }, [currentId, dispatch,navigate]);
     return (
         <Grow in>
             <Container>

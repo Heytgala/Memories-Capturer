@@ -5,6 +5,8 @@ import memories from '../../images/memories.png';
 import useStyles from './styles';
 import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { jwtDecode } from 'jwt-decode';
+
 
 
 const Navbar = () => {
@@ -23,6 +25,13 @@ const Navbar = () => {
     };
 
     useEffect(() => {
+        const token = user?.token;
+
+        if (token) {
+            const decodedToken = jwtDecode(token);
+
+            if (decodedToken.exp * 1000 < new Date().getTime()) logout();
+        }
         // Optionally update user state if the localStorage value changes
         setUser(JSON.parse(localStorage.getItem('profile')));
     }, [location]);
